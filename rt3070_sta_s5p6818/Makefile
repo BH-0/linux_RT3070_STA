@@ -9,7 +9,7 @@ TARGET = LINUX
 endif
 
 ifeq ($(CHIPSET),)
-CHIPSET = 5370
+CHIPSET = 3070
 endif
 
 #OS ABL - YES or NO
@@ -23,7 +23,7 @@ endif
 RTMP_SRC_DIR = $(RT28xx_DIR)/RT$(CHIPSET)
 
 #PLATFORM: Target platform
-PLATFORM = PC
+#PLATFORM = PC
 #PLATFORM = 5VT
 #PLATFORM = IKANOS_V160
 #PLATFORM = IKANOS_V180
@@ -31,7 +31,7 @@ PLATFORM = PC
 #PLATFORM = SIGMA_8622
 #PLATFORM = INIC
 #PLATFORM = STAR
-#PLATFORM = IXP
+PLATFORM = IXP
 #PLATFORM = INF_TWINPASS
 #PLATFORM = INF_DANUBE
 #PLATFORM = INF_AR9
@@ -45,7 +45,7 @@ PLATFORM = PC
 #PLATFORM = SMDK
 #PLATFORM = RMI
 #PLATFORM = RMI_64
-#PLATFORM = KODAK_DC
+##PLATFORM = KODAK_DC
 #PLATFORM = DM6446
 #PLATFORM = FREESCALE8377
 #PLATFORM = BL2348
@@ -169,17 +169,15 @@ CROSS_COMPILE = mips-wrs-linux-gnu-
 endif
 
 ifeq ($(PLATFORM),PC)
-# Linux 2.6
-LINUX_SRC = /lib/modules/$(shell uname -r)/build
-# Linux 2.4 Change to your local setting
-#LINUX_SRC = /usr/src/linux-2.4
-LINUX_SRC_MODULE = /lib/modules/$(shell uname -r)/kernel/drivers/net/wireless/
-CROSS_COMPILE = 
+LINUX_SRC = /home/alientek/6818GEC/kernel
+CROSS_COMPILE = /home/alientek/6818GEC/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-
+
 endif
 
 ifeq ($(PLATFORM),IXP)
-LINUX_SRC = /project/stable/Gmtek/snapgear-uclibc/linux-2.6.x
-CROSS_COMPILE = arm-linux-
+LINUX_SRC = /home/alientek/6818GEC/kernel
+CROSS_COMPILE = /home/alientek/6818GEC/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-
+
 endif
 
 ifeq ($(PLATFORM),INF_TWINPASS)
@@ -323,26 +321,26 @@ ifeq ($(OSABL),YES)
 endif
 
 ifeq ($(RT28xx_MODE),AP)
-	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)ap.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)ap.o /nfs
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)ap.o /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)ap.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)ap.o /nfs
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)ap.o /nfs
 endif
 ifeq ($(PLATFORM),INF_AMAZON_SE)
-	cp -f /tftpboot/rt2870ap.o /backup/ifx/build/root_filesystem/lib/modules/2.4.31-Amazon_SE-3.6.2.2-R0416_Ralink/kernel/drivers/net
+	cp -f /nfs/rt2870ap.o /backup/ifx/build/root_filesystem/lib/modules/2.4.31-Amazon_SE-3.6.2.2-R0416_Ralink/kernel/drivers/net
 endif
 else	
 ifeq ($(RT28xx_MODE),APSTA)
-	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)apsta.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)apsta.o /nfs
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)apsta.o /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)apsta.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)apsta.o /nfs
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)apsta.o /nfs
 endif
 else
-	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)sta.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)sta.o /nfs
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)sta.o /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)sta.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)sta.o /nfs
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)sta.o /nfs
 endif
 endif	
 endif	
@@ -370,25 +368,25 @@ ifeq ($(OSABL),YES)
 endif
 
 ifeq ($(RT28xx_MODE),AP)
-	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)ap.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)ap.ko /nfs
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)ap.ko /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)ap.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)ap.ko /nfs
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)ap.ko /nfs
 endif
 	rm -f os/linux/rt$(CHIPSET)ap.ko.lzma
 	/root/bin/lzma e os/linux/rt$(CHIPSET)ap.ko os/linux/rt$(CHIPSET)ap.ko.lzma
 else	
 ifeq ($(RT28xx_MODE),APSTA)
-	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)apsta.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)apsta.ko /nfs
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)apsta.ko /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)apsta.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)apsta.ko /nfs
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)apsta.ko /nfs
 endif
 else
-	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)sta.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(CHIPSET)sta.ko /nfs
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)sta.ko /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)sta.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(CHIPSET)sta.ko /nfs
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(CHIPSET)sta.ko /nfs
 endif
 endif
 endif

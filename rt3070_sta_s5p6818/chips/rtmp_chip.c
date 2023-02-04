@@ -467,7 +467,7 @@ VOID RtmpChipOpsHook(
 	if (IS_RT30xx(pAd))
 	{
 		if (IS_RT3390(pAd))
-			RT33xx_Init(pAd);
+			;//RT33xx_Init(pAd);
 		else
 			RT30xx_Init(pAd);
 	}

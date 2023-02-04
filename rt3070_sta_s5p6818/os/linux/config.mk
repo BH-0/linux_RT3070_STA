@@ -53,11 +53,11 @@ HAS_LLTD=n
 HAS_APCLI=n
 
 # Support Wpa_Supplicant
-HAS_WPA_SUPPLICANT=n
+HAS_WPA_SUPPLICANT=y
 
 
 # Support Native WpaSupplicant for Network Maganger
-HAS_NATIVE_WPA_SUPPLICANT_SUPPORT=n
+HAS_NATIVE_WPA_SUPPLICANT_SUPPORT=y
 
 #Support Net interface block while Tx-Sw queue full
 HAS_BLOCK_NET_IF=n
@@ -575,7 +575,7 @@ ifeq ($(PLATFORM),RMI_64)
 WFLAGS += -DRT_BIG_ENDIAN 
 endif
 ifeq ($(PLATFORM),IXP)
-WFLAGS += -DRT_BIG_ENDIAN
+#WFLAGS += -DRT_BIG_ENDIAN
 endif
 
 ifeq ($(PLATFORM),IKANOS_V160)
@@ -746,8 +746,8 @@ export EXTRA_CFLAGS
 endif
 
 ifeq ($(PLATFORM),IXP)
-	CFLAGS := -v -D__KERNEL__ -DMODULE -I$(LINUX_SRC)/include -I$(RT28xx_DIR)/include -mbig-endian -Wall -Wstrict-prototypes -Wno-trigraphs -O2 -fno-strict-aliasing -fno-common -Uarm -fno-common -pipe -mapcs-32 -D__LINUX_ARM_ARCH__=5 -mcpu=xscale -mtune=xscale -malignment-traps -msoft-float $(WFLAGS)
-        EXTRA_CFLAGS := -v $(WFLAGS) -I$(RT28xx_DIR)/include -mbig-endian
+	CFLAGS := -v -D__KERNEL__ -DMODULE -I$(LINUX_SRC)/include -I$(RT28xx_DIR)/include -Wall -Wstrict-prototypes -Wno-trigraphs -O2 -fno-strict-aliasing -fno-common -Uarm -fno-common -pipe -mapcs-32 -D__LINUX_ARM_ARCH__=5 -mcpu=xscale -mtune=xscale -malignment-traps -msoft-float $(WFLAGS)
+        EXTRA_CFLAGS := -v $(WFLAGS) -I$(RT28xx_DIR)/include 
 	export CFLAGS        
 endif
 
